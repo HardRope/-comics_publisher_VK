@@ -24,8 +24,13 @@ def download_comics(url, path):
 
 
 def get_upload_link(token, group_id):
-    url = f'https://api.vk.com/method/photos.getWallUploadServer?group_id={group_id}&access_token={token}&v=5.131'
-    response = requests.get(url)
+    url = f'https://api.vk.com/method/photos.getWallUploadServer'
+    params = {
+        'group_id': group_id,
+        'access_token': token,
+        'v': '5.131',
+    }
+    response = requests.get(url, params=params)
     response.raise_for_status()
     return response.json()['response']['upload_url']
 
@@ -59,12 +64,12 @@ if __name__ == '__main__':
 
     url = 'https://xkcd.com/353/info.0.json'
 
+    author_comment = get_comics_info(url)['alt']
     image_url = get_comics_info(url)['img']
     image_path = create_directory() / '353.png'
 
-    print(get_comics_info(url)['alt'])
     download_comics(image_url, image_path)
 
     upload_link = get_upload_link(vk_access_token, vk_group_id)
     upload_result = upload_image(upload_link, image_path)
-    print(save_uploaded_photo(vk_group_id, vk_access_token, upload_result))
+    save_uploaded_photo(vk_group_id, vk_access_token, upload_result)
