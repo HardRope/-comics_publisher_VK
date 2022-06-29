@@ -1,3 +1,6 @@
+import os
+
+from dotenv import load_dotenv
 import requests
 from pathlib import Path
 
@@ -19,7 +22,41 @@ def download_comics(url, path):
     with open(path, 'wb') as file:
         file.write(response.content)
 
+
+def get_upload_link(token, group_id):
+    url = f'https://api.vk.com/method/photos.getWallUploadServer?group_id={group_id}&access_token={token}&v=5.131'
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()['response']['upload_url']
+
+def upload_image(url, path):
+    with open(path, 'rb') as file:
+        files = {
+            'photo': file
+        }
+        response = requests.post(url, files=files)
+        response.raise_for_status()
+    return response.json()
+
+def save_uploaded_photo(group_id, token, saved_data):
+    url = f'https://api.vk.com/method/photos.saveWallPhoto'
+    params = {
+        'group_id': group_id,
+        'access_token': token,
+        'v': '5.131',
+        'server': saved_data['server'],
+        'photo': saved_data['photo'],
+        'hash': saved_data['hash'],
+    }
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    return response.json()
+
 if __name__ == '__main__':
+    load_dotenv()
+    vk_access_token = os.getenv('VK-ACCESS-TOKEN')
+    vk_group_id = os.getenv('VK-GROUP_ID')
+
     url = 'https://xkcd.com/353/info.0.json'
 
     image_url = get_comics_info(url)['img']
@@ -27,3 +64,7 @@ if __name__ == '__main__':
 
     print(get_comics_info(url)['alt'])
     download_comics(image_url, image_path)
+
+    upload_link = get_upload_link(vk_access_token, vk_group_id)
+    upload_result = upload_image(upload_link, image_path)
+    print(save_uploaded_photo(vk_group_id, vk_access_token, upload_result))
