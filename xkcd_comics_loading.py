@@ -8,7 +8,7 @@ def get_comics_count():
     response.raise_for_status()
     return response.json()['num']
 
-def choose_random_comics(count):
+def choose_random_comic(count):
     return randint(1, count)
 
 def get_comic_info(number):
