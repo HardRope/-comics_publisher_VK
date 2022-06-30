@@ -37,16 +37,16 @@ if __name__ == '__main__':
     loaded_photo = save_uploaded_photo(
         vk_group_id,
         vk_access_token,
+        upload_image_result,
         vk_api_version,
-        upload_image_result
     )
 
     post_id = publish_comics(
         vk_group_id,
         vk_access_token,
-        vk_api_version,
         author_comment,
         loaded_photo['id'],
-        loaded_photo['owner_id']
+        loaded_photo['owner_id'],
+        vk_api_version,
     )
     os.remove(image_path)

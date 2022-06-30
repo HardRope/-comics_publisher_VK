@@ -1,6 +1,6 @@
 import requests
 
-def get_upload_link(token, group_id, api_version):
+def get_upload_link(token, group_id, api_version='5.131'):
     url = f'https://api.vk.com/method/photos.getWallUploadServer'
     params = {
         'group_id': group_id,
@@ -22,7 +22,7 @@ def upload_image(url, path):
     return response.json()
 
 
-def save_uploaded_photo(group_id, token, api_version, saved_data):
+def save_uploaded_photo(group_id, token, saved_data, api_version='5.131'):
     url = f'https://api.vk.com/method/photos.saveWallPhoto'
     params = {
         'group_id': group_id,
@@ -37,7 +37,7 @@ def save_uploaded_photo(group_id, token, api_version, saved_data):
     return response.json()['response'][0]
 
 
-def publish_comics(group_id, token, api_version, message, media_id, owner_id):
+def publish_comics(group_id, token, message, media_id, owner_id, api_version='5.131'):
     url = f'https://api.vk.com/method/wall.post'
     params = {
         'owner_id': f'-{group_id}',
