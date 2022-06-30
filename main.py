@@ -3,7 +3,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from vk_image_publishing import get_upload_link, upload_image, save_uploaded_photo, publicate_comics
+from vk_image_publishing import get_upload_link, upload_image, save_uploaded_photo, publish_comics
 from xkcd_comics_loading import get_comic_info, download_comic, get_comics_count, choose_random_comic
 
 
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     comic = get_comic_info(comic_num)
     author_comment = comic['alt']
     image_url = comic['img']
-    
+
     image_filename = str(comic_num) + '.png'
     image_path = Path.cwd() / image_filename
 
@@ -41,7 +41,7 @@ if __name__ == '__main__':
         upload_image_result
     )
 
-    post_id = publicate_comics(
+    post_id = publish_comics(
         vk_group_id,
         vk_access_token,
         vk_api_version,

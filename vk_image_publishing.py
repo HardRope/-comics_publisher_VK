@@ -37,7 +37,7 @@ def save_uploaded_photo(group_id, token, api_version, saved_data):
     return response.json()['response'][0]
 
 
-def publicate_comics(group_id, token, api_version, message, media_id, owner_id):
+def publish_comics(group_id, token, api_version, message, media_id, owner_id):
     url = f'https://api.vk.com/method/wall.post'
     params = {
         'owner_id': f'-{group_id}',
