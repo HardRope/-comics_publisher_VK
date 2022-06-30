@@ -22,15 +22,15 @@ def upload_image(url, path):
     return response.json()
 
 
-def save_uploaded_photo(group_id, token, saved_data, api_version='5.131'):
+def save_uploaded_photo(group_id, token, server, photo, hash, api_version='5.131'):
     url = f'https://api.vk.com/method/photos.saveWallPhoto'
     params = {
         'group_id': group_id,
         'access_token': token,
         'v': api_version,
-        'server': saved_data['server'],
-        'photo': saved_data['photo'],
-        'hash': saved_data['hash'],
+        'server': server,
+        'photo': photo,
+        'hash': hash,
     }
     response = requests.get(url, params=params)
     response.raise_for_status()

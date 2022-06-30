@@ -33,11 +33,14 @@ if __name__ == '__main__':
     )
 
     upload_image_result = upload_image(upload_link, image_path)
+    image_server, image_photo, image_hash = upload_image_result.values()
 
     loaded_photo = save_uploaded_photo(
         vk_group_id,
         vk_access_token,
-        upload_image_result,
+        image_server,
+        image_photo,
+        image_hash,
         vk_api_version,
     )
 
