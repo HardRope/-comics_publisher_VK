@@ -1,4 +1,4 @@
-# #comics_publisher_VK
+# comics_publisher_VK
  
 Program created to download random comic from [xkcd.com](https://xkcd.com/) and publish it with the author
 comment at your [VK](https://vk.com) group, using VK-Api services.
