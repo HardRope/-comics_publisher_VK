@@ -35,7 +35,9 @@ if __name__ == '__main__':
     finally:
         os.remove(image_path)
 
-    image_server, image_photo, image_hash = upload_image_result.values()
+    image_server = upload_image_result['server']
+    image_photo = upload_image_result['photo']
+    image_hash = upload_image_result['hash']
 
     loaded_photo = save_uploaded_photo(
         vk_group_id,
